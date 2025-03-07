@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include
-from .views import index  # Importando a view do index
+from .views import index 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
