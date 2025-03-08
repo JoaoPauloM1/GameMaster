@@ -1,14 +1,39 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hangman</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Jogo da Forca</title>
 </head>
 <body>
-    <h1 class="teste"> HANGMAN!!! </h1>
-    <a href="{% url 'index' %}"> Back </a>
+    <h1>Jogo da Forca</h1>
+
+    {% if ganhou %}
+        <p>Parabéns, você ganhou!</p>
+        <p>A palavra era {{ palavra_secreta }}.</p>
+    {% elif perdeu %}
+        <p>Você perdeu!</p>
+        <p>A palavra era {{ palavra_secreta }}.</p>
+    {% else %}
+        <p>Palavra: {{ palavra_visivel }}</p>
+        <p>Tentativas erradas: {{ tentativas_erradas }} / 6</p>
+        <p>Letras adivinhadas: {{ letras_adivinhadas }}</p>
+        <form method="post">
+            {% csrf_token %}
+            <label for="letra">Digite uma letra:</label>
+            <input type="text" id="letra" name="letra" maxlength="1" required>
+            <button type="submit">Enviar</button>
+        </form>
+    {% endif %}
+
+    <br>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" name="reiniciar">Reiniciar Jogo</button>
+    </form>
+
+    <a href="/">
+        <button>Voltar ao Menu</button>
+    </a>
 </body>
 </html>

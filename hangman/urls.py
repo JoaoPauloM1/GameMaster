@@ -1,6 +1,6 @@
 from django.urls import path
-from hangman.views import hangman
+from hangman.views import hangman_view
 
 urlpatterns = [
-    path('', hangman, name='hangman')
+    path('', hangman_view, name='hangman'),
 ]
