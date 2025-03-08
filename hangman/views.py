@@ -1,7 +1,19 @@
 import random
 from django.shortcuts import render, redirect
 
-PALAVRAS = ['python', 'django', 'hangman', 'jogo', 'desenvolvimento']
+PALAVRAS = [
+    'algoritmo', 'aplicativo', 'backend', 'bigdata', 'bitcoin', 'blockchain', 
+    'browser', 'bytecode', 'cache', 'cibernetica', 'cloud', 'compilador', 
+    'computador', 'criptografia', 'dashboard', 'database', 'debug', 'desenvolvedor', 
+    'devops', 'digital', 'disco', 'dispositivo', 'download', 'email', 'encryption', 
+    'firewall', 'firmware', 'framework', 'frontend', 'github', 'hardware', 'html', 
+    'internet', 'javascript', 'kernel', 'linux', 'machinelearning', 'mainframe', 
+    'malware', 'microprocessador', 'mobile', 'nanotecnologia', 'network', 'openai', 
+    'opensource', 'programacao', 'protocolo', 'python', 'quantum', 'realidadevirtual', 
+    'robotica', 'script', 'seguranca', 'servidor', 'software', 'streaming', 
+    'supercomputador', 'tecnologia', 'terminal', 'usabilidade', 'virtualizacao', 
+    'web', 'webdesign', 'wi-fi', 'windows', 'wireless', 'xml', 'youtube', 'zip'
+]
 
 def hangman_view(request):
     if 'palavra_secreta' not in request.session:

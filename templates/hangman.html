@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Jogo da Forca</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
     <h1>Jogo da Forca</h1>
@@ -16,6 +17,7 @@
         <p>A palavra era {{ palavra_secreta }}.</p>
     {% else %}
         <p>Palavra: {{ palavra_visivel }}</p>
+        <p>Dica: Apenas palavras relacionadas com tecnologia.</p>
         <p>Tentativas erradas: {{ tentativas_erradas }} / 6</p>
         <p>Letras adivinhadas: {{ letras_adivinhadas }}</p>
         <form method="post">
