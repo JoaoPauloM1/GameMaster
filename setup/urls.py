@@ -7,4 +7,5 @@ urlpatterns = [
     path('', index, name='index'),
     path('hangman/', include('hangman.urls')),
     path('battleship/', include('batalha_naval.urls')),
+    path('memoria/', include('jogo_da_memoria.urls')),
 ]
