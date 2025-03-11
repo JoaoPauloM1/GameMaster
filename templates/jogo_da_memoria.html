@@ -24,6 +24,7 @@
             cursor: pointer;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            user-select: none;
         }
         .card.flipped {
             background-color: #fff;
@@ -51,11 +52,9 @@
         <button>Voltar ao Menu</button>
     </a>
     <h1>Jogo da Memória</h1>
-    <p>Tentativas: {{ attempts }}</p>
+    <p>Tentativas: <span id="attempts">{{ attempts }}</span></p>
 
-    {% if game_over %}
-        <div class="message">Parabéns! Você completou o jogo em {{ attempts }} tentativas!</div>
-    {% endif %}
+    <div class="message" id="winMessage" style="display: none;"></div>
 
     <form method="POST" action="{% url 'memoria' %}">
         {% csrf_token %}
@@ -65,8 +64,8 @@
 
     <div class="memory-board">
         {% for card in cards %}
-            <div class="card {% if forloop.counter0 in flipped or forloop.counter0 in matched %}flipped{% endif %} {% if forloop.counter0 in matched %}matched{% endif %}"
-                 onclick="flipCard({{ forloop.counter0 }})" 
+            <div class="card {% if forloop.counter0 in flipped or forloop.counter0 in matched %}flipped{% endif %} {% if forloop.counter0 in matched %}matched{% endif %}" 
+                 onclick="flipCard(this)" 
                  data-index="{{ forloop.counter0 }}"
                  data-value="{{ card }}">
                 {% if forloop.counter0 in flipped or forloop.counter0 in matched %}
@@ -79,63 +78,51 @@
     </div>
 
     <script>
-        function flipCard(index) {
-            const cardElements = document.querySelectorAll('.card');
-            const flippedCards = document.querySelectorAll('.card.flipped:not(.matched)');
-            
-            if (flippedCards.length >= 2) {
-                return; // Impede virar mais de duas cartas ao mesmo tempo
+        let flippedCards = [];
+        let matchedCards = [];
+        let attempts = parseInt(document.getElementById('attempts').textContent);
+
+        function flipCard(cardElement) {
+            if (flippedCards.length >= 2 || cardElement.classList.contains('flipped') || cardElement.classList.contains('matched')) {
+                return;
             }
 
-            const card = cardElements[index];
-            if (!card.classList.contains('flipped') && !card.classList.contains('matched')) {
-                card.classList.add('flipped');
-                card.textContent = card.getAttribute('data-value'); // Exibe o valor correto da carta
+            cardElement.classList.add('flipped');
+            cardElement.textContent = cardElement.getAttribute('data-value');
+            flippedCards.push(cardElement);
 
-                // Captura todas as cartas viradas após a ação
-                const flippedCards = document.querySelectorAll('.card.flipped:not(.matched)');
-                
-                if (flippedCards.length === 2) {
-                    setTimeout(() => {
-                        const [card1, card2] = flippedCards;
-
-                        // Verifica se os valores das cartas são iguais
-                        if (card1.getAttribute('data-value') === card2.getAttribute('data-value')) {
-                            card1.classList.add('matched');
-                            card2.classList.add('matched');
-                        } else {
-                            card1.classList.remove('flipped');
-                            card2.classList.remove('flipped');
-                            card1.textContent = '?';
-                            card2.textContent = '?';
-                        }
-
-                        // Envia a jogada para o servidor
-                        sendMove(index);
-                    }, 1000);
-                }
+            if (flippedCards.length === 2) {
+                setTimeout(checkMatch, 800);
             }
         }
 
-        function sendMove(index) {
-            const form = document.createElement('form');
-            form.method = 'POST';
-            form.action = "{% url 'memoria' %}";
+        function checkMatch() {
+            const [card1, card2] = flippedCards;
 
-            const csrf = document.createElement('input');
-            csrf.type = 'hidden';
-            csrf.name = 'csrfmiddlewaretoken';
-            csrf.value = '{{ csrf_token }}';
-            form.appendChild(csrf);
+            if (card1.getAttribute('data-value') === card2.getAttribute('data-value')) {
+                card1.classList.add('matched');
+                card2.classList.add('matched');
+                matchedCards.push(card1, card2);
+            } else {
+                card1.classList.remove('flipped');
+                card2.classList.remove('flipped');
+                card1.textContent = '?';
+                card2.textContent = '?';
+            }
 
-            const input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = 'card_index';
-            input.value = index;
-            form.appendChild(input);
+            attempts++;
+            document.getElementById('attempts').textContent = attempts;
 
-            document.body.appendChild(form);
-            form.submit();
+            flippedCards = [];
+
+            // Verifica se todas as cartas foram combinadas
+            if (matchedCards.length === document.querySelectorAll('.card').length) {
+                setTimeout(() => {
+                    const winMessage = document.getElementById('winMessage');
+                    winMessage.style.display = 'block';
+                    winMessage.textContent = `🎉 Parabéns! Você completou o jogo em ${attempts} tentativas! 🎉`;
+                }, 500);
+            }
         }
     </script>
 </body>
