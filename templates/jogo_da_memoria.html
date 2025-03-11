@@ -5,10 +5,138 @@
     <meta charset="UTF-8">
     <title>Jogo da Memória</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        .memory-board {
+            display: grid;
+            grid-template-columns: repeat(4, 100px);
+            gap: 10px;
+            margin: 20px auto;
+            width: fit-content;
+        }
+        .card {
+            width: 100px;
+            height: 100px;
+            background-color: #ccc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            cursor: pointer;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .card.flipped {
+            background-color: #fff;
+        }
+        .card.matched {
+            background-color: #8f8;
+            cursor: default;
+        }
+        .message {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 20px;
+        }
+        .restart-button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
     <a href="/">
         <button>Voltar ao Menu</button>
     </a>
+    <h1>Jogo da Memória</h1>
+    <p>Tentativas: {{ attempts }}</p>
+
+    {% if game_over %}
+        <div class="message">Parabéns! Você completou o jogo em {{ attempts }} tentativas!</div>
+    {% endif %}
+
+    <form method="POST" action="{% url 'memoria' %}">
+        {% csrf_token %}
+        <input type="hidden" name="restart" value="true">
+        <button type="submit" class="restart-button">Reiniciar Jogo</button>
+    </form>
+
+    <div class="memory-board">
+        {% for card in cards %}
+            <div class="card {% if forloop.counter0 in flipped or forloop.counter0 in matched %}flipped{% endif %} {% if forloop.counter0 in matched %}matched{% endif %}"
+                 onclick="flipCard({{ forloop.counter0 }})" 
+                 data-index="{{ forloop.counter0 }}"
+                 data-value="{{ card }}">
+                {% if forloop.counter0 in flipped or forloop.counter0 in matched %}
+                    {{ card }}
+                {% else %}
+                    ?
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+
+    <script>
+        function flipCard(index) {
+            const cardElements = document.querySelectorAll('.card');
+            const flippedCards = document.querySelectorAll('.card.flipped:not(.matched)');
+            
+            if (flippedCards.length >= 2) {
+                return; // Impede virar mais de duas cartas ao mesmo tempo
+            }
+
+            const card = cardElements[index];
+            if (!card.classList.contains('flipped') && !card.classList.contains('matched')) {
+                card.classList.add('flipped');
+                card.textContent = card.getAttribute('data-value'); // Exibe o valor correto da carta
+
+                // Captura todas as cartas viradas após a ação
+                const flippedCards = document.querySelectorAll('.card.flipped:not(.matched)');
+                
+                if (flippedCards.length === 2) {
+                    setTimeout(() => {
+                        const [card1, card2] = flippedCards;
+
+                        // Verifica se os valores das cartas são iguais
+                        if (card1.getAttribute('data-value') === card2.getAttribute('data-value')) {
+                            card1.classList.add('matched');
+                            card2.classList.add('matched');
+                        } else {
+                            card1.classList.remove('flipped');
+                            card2.classList.remove('flipped');
+                            card1.textContent = '?';
+                            card2.textContent = '?';
+                        }
+
+                        // Envia a jogada para o servidor
+                        sendMove(index);
+                    }, 1000);
+                }
+            }
+        }
+
+        function sendMove(index) {
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = "{% url 'memoria' %}";
+
+            const csrf = document.createElement('input');
+            csrf.type = 'hidden';
+            csrf.name = 'csrfmiddlewaretoken';
+            csrf.value = '{{ csrf_token }}';
+            form.appendChild(csrf);
+
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'card_index';
+            input.value = index;
+            form.appendChild(input);
+
+            document.body.appendChild(form);
+            form.submit();
+        }
+    </script>
 </body>
 </html>
