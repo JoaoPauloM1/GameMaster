@@ -4,13 +4,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pedra, papel e tesoura</title>
+    <title>Pedra, Papel e Tesoura</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        .choices button {
+            font-size: 2em;
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+        .game-over {
+            margin-top: 20px;
+            font-size: 1.5em;
+            color: green;
+        }
+    </style>
 </head>
 <body>
-    <h1 class="teste"> OI!! </h1>
     <a href="/">
         <button>Voltar ao Menu</button>
     </a>
+    
+    <h1>Pedra, Papel e Tesoura</h1>
+    
+    <p>Placar: Você {{ score.player }} x {{ score.machine }} Máquina</p>
+    
+    {% if last_game %}
+        <div class="result">
+            <p>
+                Último jogo: Você escolheu 
+                {% if last_game.player_choice == 'pedra' %}✊{% endif %}
+                {% if last_game.player_choice == 'papel' %}✋{% endif %}
+                {% if last_game.player_choice == 'tesoura' %}✌️{% endif %}
+                e a máquina escolheu 
+                {% if last_game.machine_choice == 'pedra' %}✊{% endif %}
+                {% if last_game.machine_choice == 'papel' %}✋{% endif %}
+                {% if last_game.machine_choice == 'tesoura' %}✌️{% endif %}.
+                {% if last_game.result == 'draw' %}
+                    <strong>Foi um empate!</strong>
+                {% elif last_game.result == 'player' %}
+                    <strong>Você ganhou!</strong>
+                {% else %}
+                    <strong>A máquina ganhou!</strong>
+                {% endif %}
+            </p>
+        </div>
+    {% endif %}
+    
+    {% if game_over %}
+        <div class="game-over">
+            <h2>{{ winner }} venceu a melhor de três! 🎉</h2>
+            <form method="post" action="{% url 'pedra_papel_tesoura' %}">
+                {% csrf_token %}
+                <button type="submit" name="reset">Jogar Novamente</button>
+            </form>
+        </div>
+    {% else %}
+        <div class="choices">
+            <form method="post" action="{% url 'pedra_papel_tesoura' %}">
+                {% csrf_token %}
+                <button type="submit" name="choice" value="pedra">✊ Pedra</button>
+                <button type="submit" name="choice" value="papel">✋ Papel</button>
+                <button type="submit" name="choice" value="tesoura">✌️ Tesoura</button>
+            </form>
+        </div>
+    {% endif %}
 </body>
 </html>
