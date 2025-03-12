@@ -29,19 +29,21 @@
                 {% for cell in row %}
                     <td>
                         {% if cell == 'X' %}
-                            <span>💥</span>
+                            <span>💥</span>  <!-- Acerto -->
                         {% elif cell == 'O' %}
-                            <span>🌊</span>
+                            <span>🌊</span>  <!-- Erro -->
+                        {% elif cell == '💥' %}
+                            <span>💥</span>  <!-- Navio não encontrado -->
                         {% else %}
                             {% if not game_over %}
                                 <form method="POST" action="{% url 'battleship' %}">
                                     {% csrf_token %}
                                     <input type="hidden" name="x" value="{{ forloop.parentloop.counter0 }}">
                                     <input type="hidden" name="y" value="{{ forloop.counter0 }}">
-                                    <button type="submit">🔍</button>
+                                    <button type="submit">🔍</button>  <!-- Célula não revelada -->
                                 </form>
                             {% else %}
-                                <span>🌊</span>
+                                <span>🌊</span>  <!-- Água (jogo finalizado) -->
                             {% endif %}
                         {% endif %}
                     </td>
