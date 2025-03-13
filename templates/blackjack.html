@@ -1,0 +1,82 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Blackjack</title>
+    <link rel="stylesheet" href="{% static 'css/global.css' %}">
+    <link rel="stylesheet" href="{% static 'css/blackjack.css' %}">
+</head>
+<body>
+    <a href="/" class="voltar-menu">
+        <button>Voltar ao Menu</button>
+    </a>
+
+    <h1>Blackjack</h1>
+
+    {% if message %}
+        <div class="mensagem">
+            <p>{{ message }}</p>
+        </div>
+    {% endif %}
+
+    <div class="jogo">
+        <div class="mao">
+            <h2>Mão do Dealer:</h2>
+            <div class="cartas">
+                {% for card in dealer_hand %}
+                    <div class="carta">
+                        <span class="valor">{{ card.valor }}</span>
+                        <span class="naipe">
+                            {% if card.naipe == 'ouros' %}♦️
+                            {% elif card.naipe == 'copas' %}♥️
+                            {% elif card.naipe == 'espadas' %}♠️
+                            {% elif card.naipe == 'paus' %}♣️
+                            {% endif %}
+                        </span>
+                    </div>
+                {% endfor %}
+            </div>
+            {% if game_over %}
+                <div class="valor-mao">
+                    <p>Valor da mão do Dealer: <strong>{{ dealer_total }}</strong></p>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="mao">
+            <h2>Sua Mão:</h2>
+            <div class="cartas">
+                {% for card in player_hand %}
+                    <div class="carta">
+                        <span class="valor">{{ card.valor }}</span>
+                        <span class="naipe">
+                            {% if card.naipe == 'ouros' %}♦️
+                            {% elif card.naipe == 'copas' %}♥️
+                            {% elif card.naipe == 'espadas' %}♠️
+                            {% elif card.naipe == 'paus' %}♣️
+                            {% endif %}
+                        </span>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="valor-mao">
+                <p>Valor da sua mão: <strong>{{ player_total }}</strong></p>
+            </div>
+        </div>
+    </div>
+
+    {% if not game_over %}
+        <form method="post" class="acoes">
+            {% csrf_token %}
+            <button type="submit" name="hit">Pedir Carta</button>
+            <button type="submit" name="stand">Parar</button>
+        </form>
+    {% else %}
+        <form method="post" class="reiniciar">
+            {% csrf_token %}
+            <button type="submit" name="restart">Jogar Novamente</button>
+        </form>
+    {% endif %}
+</body>
+</html>

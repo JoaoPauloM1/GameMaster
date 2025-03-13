@@ -3,6 +3,7 @@ from games.jogos.jogo_da_memoria import jogo_da_memoria
 from games.jogos.forca import forca
 from games.jogos.batalha_naval import batalha_naval
 from games.jogos.pedra_papel_tesoura import pedra_papel_tesoura
+from games.jogos.blackjack import blackjack
 
 def jogo_da_memoria_view(request):
     context = jogo_da_memoria(request)
@@ -27,3 +28,9 @@ def pedra_papel_tesoura_view(request):
     if hasattr(context, 'status_code') and context.status_code == 302:
         return context 
     return render(request, 'pedra_papel_tesoura.html', context)
+
+def blackjack_view(request):
+    context = blackjack(request)
+    if hasattr(context, 'status_code') and context.status_code == 302:
+        return context
+    return render(request, 'blackjack.html', context)
