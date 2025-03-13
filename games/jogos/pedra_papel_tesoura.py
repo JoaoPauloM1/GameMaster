@@ -1,14 +1,12 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 import random
 
-def pedra_papel_tesoura_view(request):
-    # Inicializa o placar e o último jogo na sessão, se não existirem
+def pedra_papel_tesoura(request):
     if 'score' not in request.session:
         request.session['score'] = {'player': 0, 'machine': 0}
     if 'last_game' not in request.session:
         request.session['last_game'] = None
 
-    # Verifica se o jogo terminou (melhor de 3)
     game_over = False
     winner = None
     if request.session['score']['player'] == 2:
@@ -18,13 +16,12 @@ def pedra_papel_tesoura_view(request):
         game_over = True
         winner = 'Máquina'
 
-    # Processa a escolha do jogador ou o reinício do jogo
     if request.method == 'POST':
-        if 'reset' in request.POST:  # Reiniciar o jogo
+        if 'reset' in request.POST:
             request.session['score'] = {'player': 0, 'machine': 0}
             request.session['last_game'] = None
             return redirect('pedra_papel_tesoura')
-        elif not game_over and 'choice' in request.POST:  # Jogada normal
+        elif not game_over and 'choice' in request.POST:
             player_choice = request.POST.get('choice')
             machine_choice = random.choice(['pedra', 'papel', 'tesoura'])
             
@@ -41,7 +38,6 @@ def pedra_papel_tesoura_view(request):
                 'result': result
             }
 
-            # Verifica novamente se o jogo terminou após atualizar o placar
             if request.session['score']['player'] == 2:
                 game_over = True
                 winner = 'Você'
@@ -49,14 +45,12 @@ def pedra_papel_tesoura_view(request):
                 game_over = True
                 winner = 'Máquina'
 
-    # Contexto para o template
-    context = {
+    return {
         'score': request.session['score'],
         'last_game': request.session['last_game'],
         'game_over': game_over,
         'winner': winner
     }
-    return render(request, 'pedra_papel_tesoura.html', context)
 
 def determine_winner(player_choice, machine_choice):
     if player_choice == machine_choice:

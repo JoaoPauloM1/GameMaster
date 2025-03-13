@@ -1,0 +1,76 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Batalha Naval</title>
+    <link rel="stylesheet" href="{% static 'css/global.css' %}">
+    <link rel="stylesheet" href="{% static 'css/batalha_naval.css' %}">
+</head>
+<body>
+    <h1>Batalha Naval</h1>
+    
+    {% if message %}
+        <div class="mensagem">
+            <p>{{ message }}</p>
+        </div>
+    {% endif %}
+    
+    <p>Acertos: <span class="acertos">{{ hits }}</span> / 3</p>
+    <p>Tentativas: <span class="tentativas">{{ attempts }}</span> / 12</p>
+    
+    <table class="tabuleiro">
+        {% for row in board %}
+            <tr>
+                {% for cell in row %}
+                    <td>
+                        {% if cell == 'X' %}
+                            <span class="acerto">💥</span>
+                        {% elif cell == 'O' %}
+                            <span class="erro">🌊</span>
+                        {% elif cell == '💥' %}
+                            <span class="acerto">💥</span>
+                        {% else %}
+                            {% if not game_over %}
+                                <form method="POST" action="{% url 'batalha_naval' %}" class="celula-form">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="x" value="{{ forloop.parentloop.counter0 }}">
+                                    <input type="hidden" name="y" value="{{ forloop.counter0 }}">
+                                    <button type="submit" class="celula-button">🔍</button>
+                                </form>
+                            {% else %}
+                                <span class="agua">🌊</span>
+                            {% endif %}
+                        {% endif %}
+                    </td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+    
+    <form method="POST" action="{% url 'batalha_naval' %}" class="reiniciar-form">
+        {% csrf_token %}
+        <input type="hidden" name="restart" value="true">
+        <button type="submit" onclick="return confirm('Tem certeza que deseja reiniciar o jogo?');">Reiniciar Jogo</button>
+    </form>
+
+    <a href="/" class="voltar-menu">
+        <button>Voltar ao Menu</button>
+    </a>
+
+    <script>
+        document.querySelectorAll('.celula-form').forEach(form => {
+            form.addEventListener('submit', function(event) {
+                const x = parseInt(form.querySelector('input[name="x"]').value);
+                const y = parseInt(form.querySelector('input[name="y"]').value);
+
+                if (x < 0 || x > 4 || y < 0 || y > 4) {
+                    alert('Por favor, insira coordenadas válidas (0 a 4).');
+                    event.preventDefault();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

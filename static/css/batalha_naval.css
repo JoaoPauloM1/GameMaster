@@ -1,0 +1,62 @@
+.mensagem {
+    padding: 20px;
+    margin: 20px auto;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 400px;
+}
+
+.mensagem p {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.acertos, .tentativas {
+    font-weight: bold;
+    color: #007bff;
+}
+
+.reiniciar-form {
+    margin-top: 20px;
+}
+
+.tabuleiro {
+    margin: 20px auto;
+    border-collapse: collapse;
+}
+
+.tabuleiro td {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #ccc;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.celula-form {
+    margin: 0;
+    padding: 0;
+}
+
+.celula-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.celula-button:hover {
+    color: #007bff;
+}
+
+.acerto {
+    color: #dc3545;
+}
+
+.erro, .agua {
+    color: #007bff;
+}
+
+.voltar-menu {
+    margin-top: 20px;
+}

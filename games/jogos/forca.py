@@ -1,5 +1,5 @@
 import random
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 
 PALAVRAS = [
     'algoritmo', 'aplicativo', 'backend', 'bigdata', 'bitcoin', 'blockchain', 
@@ -15,26 +15,24 @@ PALAVRAS = [
     'web', 'webdesign', 'wi-fi', 'windows', 'wireless', 'xml', 'youtube', 'zip'
 ]
 
-def hangman_view(request):
+def forca(request):
+    if request.method == "POST" and 'reiniciar' in request.POST:
+        request.session.flush()
+        return redirect('forca')
+
     if 'palavra_secreta' not in request.session:
         request.session['palavra_secreta'] = random.choice(PALAVRAS)
         request.session['letras_adivinhadas'] = []
         request.session['tentativas_erradas'] = 0
         request.session['palavra_visivel'] = ['_'] * len(request.session['palavra_secreta'])
-    
+        request.session.modified = True
+
     palavra_secreta = request.session['palavra_secreta']
     letras_adivinhadas = request.session['letras_adivinhadas']
     tentativas_erradas = request.session['tentativas_erradas']
     palavra_visivel = request.session['palavra_visivel']
 
-    if request.method == "POST":
-        if 'reiniciar' in request.POST:
-            request.session['palavra_secreta'] = random.choice(PALAVRAS)
-            request.session['letras_adivinhadas'] = []
-            request.session['tentativas_erradas'] = 0
-            request.session['palavra_visivel'] = ['_'] * len(request.session['palavra_secreta'])
-            return redirect('hangman')
-
+    if request.method == "POST" and 'letra' in request.POST:
         letra = request.POST.get('letra').lower()
         if letra and letra not in letras_adivinhadas:
             letras_adivinhadas.append(letra)
@@ -48,19 +46,17 @@ def hangman_view(request):
             request.session['letras_adivinhadas'] = letras_adivinhadas
             request.session['tentativas_erradas'] = tentativas_erradas
             request.session['palavra_visivel'] = palavra_visivel
+            request.session.modified = True
 
-    ganhou = False
-    perdeu = False
-    if '_' not in palavra_visivel:
-        ganhou = True
-    if tentativas_erradas >= 6:
-        perdeu = True
+    ganhou = '_' not in palavra_visivel
+    perdeu = tentativas_erradas >= 6
 
-    return render(request, 'hangman.html', {
+    return {
         'palavra_secreta': palavra_secreta,
         'palavra_visivel': ''.join(palavra_visivel),
         'tentativas_erradas': tentativas_erradas,
         'letras_adivinhadas': letras_adivinhadas,
         'ganhou': ganhou,
-        'perdeu': perdeu
-    })
+        'perdeu': perdeu,
+        'mensagem': "Você ganhou!" if ganhou else "Você perdeu! A palavra era: " + palavra_secreta if perdeu else None
+    }

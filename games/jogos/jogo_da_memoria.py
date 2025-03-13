@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 import random
 
 def initialize_game():
@@ -6,8 +6,11 @@ def initialize_game():
     random.shuffle(cards)
     return cards
 
-def memoria_view(request):
-    
+def jogo_da_memoria(request):
+    if request.method == 'POST' and 'restart' in request.POST:
+        request.session.flush()
+        return redirect('jogo_da_memoria')
+
     if 'cards' not in request.session:
         request.session['cards'] = initialize_game()
         request.session['flipped'] = [] 
@@ -20,11 +23,7 @@ def memoria_view(request):
     matched = request.session['matched']
     attempts = request.session['attempts']
 
-    if request.method == 'POST':
-        if 'restart' in request.POST:
-            request.session.flush()
-            return redirect('memoria')
-
+    if request.method == 'POST' and 'card_index' in request.POST:
         card_index = int(request.POST.get('card_index'))
         if card_index not in flipped and card_index not in matched:
             flipped.append(card_index)
@@ -43,10 +42,10 @@ def memoria_view(request):
 
             request.session.modified = True
 
-    return render(request, 'jogo_da_memoria.html', {
+    return {
         'cards': cards,
         'flipped': flipped,
         'matched': matched,
         'attempts': attempts,
         'game_over': len(matched) == len(cards)
-    })
+    }

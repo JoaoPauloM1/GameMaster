@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Jogo da Forca</title>
+    <link rel="stylesheet" href="{% static 'css/global.css' %}">
+    <link rel="stylesheet" href="{% static 'css/forca.css' %}">
+</head>
+<body>
+    <h1>Jogo da Forca</h1>
+
+    {% if ganhou %}
+        <div class="mensagem ganhou">
+            <p>🎉 Parabéns, você ganhou! 🎉</p>
+            <p>A palavra era <strong>{{ palavra_secreta }}</strong>.</p>
+        </div>
+    {% elif perdeu %}
+        <div class="mensagem perdeu">
+            <p>😢 Você perdeu! 😢</p>
+            <p>A palavra era <strong>{{ palavra_secreta }}</strong>.</p>
+        </div>
+    {% else %}
+        <div class="jogo">
+            <p>Palavra: <span class="palavra-visivel">{{ palavra_visivel }}</span></p>
+            <p class="dica">Dica: Apenas palavras relacionadas com tecnologia.</p>
+            <p>Tentativas erradas: <span class="tentativas">{{ tentativas_erradas }}</span> / 6</p>
+            <p>Letras adivinhadas: <span class="letras">{{ letras_adivinhadas|join:", " }}</span></p>
+
+            <form method="post" class="adivinhar-form">
+                {% csrf_token %}
+                <label for="letra">Digite uma letra:</label>
+                <input type="text" id="letra" name="letra" maxlength="1" required
+                       pattern="[A-Za-z]" title="Por favor, insira apenas uma letra.">
+                <button type="submit">Enviar</button>
+            </form>
+        </div>
+    {% endif %}
+
+    <form method="post" class="reiniciar-form">
+        {% csrf_token %}
+        <button type="submit" name="reiniciar" onclick="return confirm('Tem certeza que deseja reiniciar o jogo?');">
+            Reiniciar Jogo
+        </button>
+    </form>
+
+    <a href="/" class="voltar-menu">
+        <button>Voltar ao Menu</button>
+    </a>
+
+    <script>
+        document.querySelector('.adivinhar-form').addEventListener('submit', function(event) {
+            const input = document.getElementById('letra');
+            const letra = input.value.trim().toLowerCase();
+
+            if (!/^[a-z]$/.test(letra)) {
+                alert('Por favor, insira apenas uma letra válida.');
+                event.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>

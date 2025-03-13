@@ -5,13 +5,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GameMaster</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/global.css' %}">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
 </head>
 <body>
-    <h1 class="teste"> OI!! </h1>
-    <a href="{% url 'hangman' %}"> Forca </a>
-    <a href="{% url 'battleship' %}"> Batalha Naval </a>
-    <a href="{% url 'memoria' %}"> Jogo da Memória </a>
-    <a href="{% url 'pedra_papel_tesoura' %}"> Pedra, papel e tesoura </a>
+    <h1>GameMaster</h1>
+    <div class="menu">
+        <a href="{% url 'forca' %}">
+            <button>Forca</button>
+        </a>
+        <a href="{% url 'batalha_naval' %}">
+            <button>Batalha Naval</button>
+        </a>
+        <a href="{% url 'jogo_da_memoria' %}">
+            <button>Jogo da Memória</button>
+        </a>
+        <a href="{% url 'pedra_papel_tesoura' %}">
+            <button>Pedra, Papel e Tesoura</button>
+        </a>
+    </div>
 </body>
 </html>
