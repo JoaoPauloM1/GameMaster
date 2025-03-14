@@ -41,3 +41,6 @@ def fazenda_view(request):
     if hasattr(context, 'status_code') and context.status_code == 302:
         return context 
     return render(request, 'fazenda.html', context)
+
+def clique_view(request):
+    return render(request, 'clique.html')

@@ -4,16 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fazenda</title>
+    <title>Simulador de Fazenda</title>
     <link rel="stylesheet" href="{% static 'css/global.css' %}">
     <link rel="stylesheet" href="{% static 'css/fazenda.css' %}">
 </head>
 <body>
-    <a href="/" class="voltar-menu">
-        <button>Voltar ao Menu</button>
-    </a>
-
-    <h1>Fazenda</h1>
+    <h1>Simulador de Fazenda</h1>
 
     {% if message %}
         <div class="mensagem">
@@ -92,5 +88,8 @@
             <button type="submit" name="restart">Reiniciar Jogo</button>
         </form>
     </div>
+    <a href="/">
+        <button>Voltar ao Menu</button>
+    </a>
 </body>
 </html>

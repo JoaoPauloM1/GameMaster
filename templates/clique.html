@@ -1,0 +1,24 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Clique Rápido</title>
+    <link rel="stylesheet" href="{% static 'css/clique.css' %}">
+    <link rel="stylesheet" href="{% static 'css/global.css' %}">
+</head>
+<body>
+    <h1>Clique Rápido</h1>
+    <p id="instrucao">Clique no círculo antes que ele desapareça!</p>
+    <p id="tempo-reacao">Tempo de reação: 0.00s</p>
+    <p id="pontuacao">Cliques: 0</p>   
+    <div class="container">
+        <div id="alvo"></div>
+    </div>
+    <button id="iniciar">Iniciar Jogo</button>
+    <script src="{% static 'js/clique.js' %}"></script>
+    <a href="/">
+        <button>Voltar ao Menu</button>
+    </a>
+</body>
+</html>

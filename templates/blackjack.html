@@ -8,10 +8,6 @@
     <link rel="stylesheet" href="{% static 'css/blackjack.css' %}">
 </head>
 <body>
-    <a href="/" class="voltar-menu">
-        <button>Voltar ao Menu</button>
-    </a>
-
     <h1>Blackjack</h1>
 
     {% if message %}
@@ -78,5 +74,8 @@
             <button type="submit" name="restart">Jogar Novamente</button>
         </form>
     {% endif %}
+    <a href="/">
+        <button>Voltar ao Menu</button>
+    </a>
 </body>
 </html>

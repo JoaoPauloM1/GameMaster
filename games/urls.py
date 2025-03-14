@@ -1,5 +1,5 @@
 from django.urls import path
-from games.views import forca_view, batalha_naval_view, jogo_da_memoria_view, pedra_papel_tesoura_view, blackjack_view, fazenda_view
+from games.views import forca_view, batalha_naval_view, jogo_da_memoria_view, pedra_papel_tesoura_view, blackjack_view, fazenda_view, clique_view
 
 urlpatterns = [
     path('forca/', forca_view, name='forca'),
@@ -8,4 +8,5 @@ urlpatterns = [
     path('pedra-papel-tesoura/', pedra_papel_tesoura_view, name='pedra_papel_tesoura'),
     path('blackjack/', blackjack_view, name='blackjack'),
     path('fazenda/', fazenda_view, name='fazenda'),
+    path('clique/', clique_view, name='clique'),
 ]

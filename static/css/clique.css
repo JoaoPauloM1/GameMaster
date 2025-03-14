@@ -1,0 +1,65 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 0;
+    padding: 20px; 
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    min-height: 100vh;
+    text-align: center;
+}
+
+h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+#instrucao {
+    margin: 5px 0;
+    font-size: 16px;
+}
+
+#tempo-reacao, #pontuacao {
+    margin: 3px 0; 
+    font-size: 14px;
+}
+
+.container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    width: 60%;
+    height: 600px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+#alvo {
+    width: 50px;
+    height: 50px;
+    background-color: #ff4757;
+    border-radius: 50%;
+    cursor: pointer;
+    display: none;
+    position: absolute;
+}
+
+#iniciar {
+    padding: 10px 20px;
+    background-color: #2ed573;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+#iniciar:hover {
+    background-color: #1e8449;
+}
