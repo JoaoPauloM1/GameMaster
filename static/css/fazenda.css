@@ -1,0 +1,123 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: #4CAF50;
+}
+
+.status {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.plantacoes ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.plantacoes li {
+    background-color: #fff;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.barra-progresso {
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    height: 10px;
+    margin: 5px 0;
+    width: 100%; 
+    overflow: hidden; 
+}
+
+.progresso {
+    background-color: #4CAF50;
+    height: 100%;
+    border-radius: 5px;
+    max-width: 100%;
+}
+
+.pronto {
+    color: #4CAF50;
+    font-weight: bold;
+}
+
+.acoes {
+    text-align: center;
+    margin-top: 20px;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.mensagem {
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.mensagem.nivel-up {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.mensagem.dificuldade {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.mensagem.evento {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.mensagem span {
+    color: red;
+}
+
+.evento {
+    display: inline-block;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.reiniciar {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.reiniciar button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.reiniciar button:hover {
+    background-color: #c82333;
+}

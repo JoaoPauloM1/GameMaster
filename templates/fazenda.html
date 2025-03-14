@@ -1,0 +1,96 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fazenda</title>
+    <link rel="stylesheet" href="{% static 'css/global.css' %}">
+    <link rel="stylesheet" href="{% static 'css/fazenda.css' %}">
+</head>
+<body>
+    <a href="/" class="voltar-menu">
+        <button>Voltar ao Menu</button>
+    </a>
+
+    <h1>Fazenda</h1>
+
+    {% if message %}
+        <div class="mensagem">
+            {{ message|safe }}
+        </div>
+    {% endif %}
+
+    {% if level_up_message %}
+        <div class="mensagem nivel-up">
+            <p>{{ level_up_message }}</p>
+        </div>
+    {% endif %}
+
+    {% if difficulty_message %}
+        <div class="mensagem dificuldade">
+            <p>{{ difficulty_message }}</p>
+        </div>
+    {% endif %}
+
+    {% if event_message %}
+        <div class="mensagem evento">
+            <p>{{ event_message }}</p>
+        </div>
+    {% endif %}
+
+    <div class="status">
+        <p>Moedas: <strong>{{ farm.coins }}</strong></p>
+        <p>Nível: <strong>{{ farm.level }}</strong> (Exp: {{ farm.experience }}/100)</p>
+        <p>Dia: <strong>{{ farm.day }}</strong></p>
+        <p>Eventos ativos: 
+            {% for event in farm.events %}
+                <span class="evento">
+                    {% if event == 'rain' %}🌧️ Chuva
+                    {% elif event == 'pest' %}🐛 Praga
+                    {% endif %}
+                </span>
+            {% empty %}
+                Nenhum
+            {% endfor %}
+        </p>
+    </div>
+
+    <div class="plantacoes">
+        <h2>Plantações:</h2>
+        {% if farm.plantations %}
+            <ul>
+                {% for plant in farm.plantations %}
+                    <li>
+                        🌱 {{ plant.type }} - Crescimento: 
+                        <div class="barra-progresso">
+                            <div class="progresso" style="width: {{ plant.growth }}%;"></div>
+                        </div>
+                        {% if plant.growth >= 100 %}
+                            <span class="pronto">(Pronto para colheita)</span>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Nenhuma plantação no momento.</p>
+        {% endif %}
+    </div>
+
+    <div class="acoes">
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" name="plant">Plantar ({{ farm.plant_cost }} moedas)</button>
+            <button type="submit" name="water">Regar (2 moedas)</button>
+            <button type="submit" name="harvest">Colher</button>
+        </form>
+    </div>
+
+    <div class="reiniciar">
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" name="restart">Reiniciar Jogo</button>
+        </form>
+    </div>
+</body>
+</html>
