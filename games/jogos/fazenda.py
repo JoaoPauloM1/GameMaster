@@ -81,7 +81,7 @@ def update_animals(farm):
                 animal_messages.append(f"🐖 Seu porco produziu carne e rendeu 7 moedas!")
             animal['days_until_production'] = random.randint(3, 7)
 
-        if random.randint(1, 100) <= 5:
+        if random.randint(1, 100) <= 15:
             farm['animals'].remove(animal)
             animal_messages.append(f"💀 Seu(a) {animal_names[animal['type']]} morreu!")
 
@@ -118,7 +118,7 @@ def fazenda(request):
     animal_messages = []
 
     if farm['game_over']:
-        message = "<span style='color: red;'>Game Over! Você não tem mais opções. Reinicie o jogo para continuar.</span>"
+        message = "<span style='color: red;'>Game Over! Você ficou sem dinheiro! Reinicie o jogo para continuar.</span>"
     else:
         if request.method == 'POST':
             if 'plant' in request.POST:
@@ -175,11 +175,11 @@ def fazenda(request):
                     else:
                         for plant in ready_to_harvest:
                             harvested.append(plant)
-                            farm['coins'] += 10
+                            farm['coins'] += 15
                         for plant in harvested:
                             farm['plantations'].remove(plant)
                         if harvested:
-                            message = f"Você colheu {len(harvested)} vegetais e ganhou {len(harvested) * 10} moedas!"
+                            message = f"Você colheu {len(harvested)} vegetais e ganhou {len(harvested) * 15} moedas!"
                 else:
                     message = "Nenhuma plantação pronta para colheita."
 
@@ -202,17 +202,10 @@ def fazenda(request):
             min_animal_cost = min(farm['animal_cost'].values())
 
             if (not farm['animals'] and
-                not farm['plantations'] and
-                farm['coins'] < farm['plant_cost'] and
-                farm['coins'] < min_animal_cost):
+                (not farm['plantations'] or not [plant for plant in farm['plantations'] if plant['growth'] >= 100]) and 
+                farm['coins'] < cost_to_water):
                 farm['game_over'] = True
-                message = "<span style='color: red;'>Game Over! Você não tem mais opções. Reinicie o jogo para continuar.</span>"
-            elif (plants_not_ready and
-                  farm['coins'] < cost_to_water and
-                  farm['coins'] < farm['plant_cost'] and
-                  farm['coins'] < min_animal_cost):
-                farm['game_over'] = True
-                message = "<span style='color: red;'>Game Over! Você não tem mais opções. Reinicie o jogo para continuar.</span>"
+                message = "<span style='color: red;'>Game Over! Você ficou sem dinheiro! Reinicie o jogo para continuar.</span>"
 
         request.session['farm'] = farm
         request.session.modified = True

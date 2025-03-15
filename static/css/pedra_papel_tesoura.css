@@ -1,38 +1,133 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #0f0f23;
+    color: #ffffff;
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+h1 {
+    font-size: 2.5rem;
+    color: #00ccff;
+    text-shadow: 0 0 10px #00ccff, 0 0 20px #00ccff;
+    margin-bottom: 20px;
+}
+
+p {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    color: #ffffff;
+}
+
 .placar {
+    font-size: 1.5rem;
     font-weight: bold;
-    color: #007bff;
+    color: #00ffcc;
 }
 
 .resultado {
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #fff;
+    padding: 15px;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 80%;
-    max-width: 400px;
+    text-align: center;
+    margin-bottom: 20px;
+    background-color: rgba(0, 0, 0, 0.7);
+    border: 2px solid #00ccff;
+    box-shadow: 0 0 15px rgba(0, 204, 255, 0.5);
+    animation: aparecer 0.5s ease-in-out;
+}
+
+.resultado p {
+    font-size: 1.2rem;
+    color: #00ffcc;
 }
 
 .game-over {
-    margin: 20px auto;
     padding: 20px;
-    background-color: #fff;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 80%;
-    max-width: 400px;
+    text-align: center;
+    margin-bottom: 20px;
+    background-color: rgba(0, 0, 0, 0.7);
+    border: 2px solid #00ffcc;
+    box-shadow: 0 0 15px rgba(0, 255, 204, 0.5);
+    animation: aparecer 0.5s ease-in-out;
+}
+
+.game-over h2 {
+    font-size: 2rem;
+    color: #00ffcc;
+    text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;
 }
 
 .escolhas {
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 80%;
-    max-width: 400px;
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
 }
 
-.voltar-menu {
+.escolhas button {
+    padding: 20px;
+    font-size: 2rem;
+    background-color: #00ccff;
+    color: #0f0f23;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 0 10px rgba(0, 204, 255, 0.5);
+}
+
+.escolhas button:hover {
+    background-color: #00a3cc;
+    transform: scale(1.1);
+}
+
+.escolhas button:active {
+    transform: scale(0.95);
+}
+
+form, a {
     margin-top: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #00ffcc;
+    color: #0f0f23;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin: 5px;
+    box-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
+}
+
+button:hover {
+    background-color: #00cc99;
+    transform: scale(1.05);
+}
+
+button:active {
+    transform: scale(0.95);
+}
+
+@keyframes aparecer {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

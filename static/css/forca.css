@@ -1,57 +1,170 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #0a0a0a;
+    color: #ffffff;
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+h1 {
+    font-size: 2.5rem;
+    color: #00ffcc;
+    text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;
+    margin-bottom: 20px;
+}
+
 .mensagem {
     padding: 20px;
-    margin: 20px auto;
     border-radius: 10px;
-    width: 80%;
-    max-width: 400px;
+    text-align: center;
+    margin-bottom: 20px;
+    animation: aparecer 0.5s ease-in-out;
 }
 
 .mensagem.ganhou {
-    background-color: #d4edda;
-    color: #155724;
-    border: 1px solid #c3e6cb;
+    background-color: #00cc66;
+    border: 2px solid #00ff88;
+    box-shadow: 0 0 20px #00cc66;
 }
 
 .mensagem.perdeu {
-    background-color: #f8d7da;
-    color: #721c24;
-    border: 1px solid #f5c6cb;
+    background-color: #ff4d4d;
+    border: 2px solid #ff6666;
+    box-shadow: 0 0 20px #ff4d4d;
+}
+
+.mensagem p {
+    font-size: 1.2rem;
+    margin: 5px 0;
 }
 
 .jogo {
-    margin: 20px auto;
+    background-color: #1a1a1a;
     padding: 20px;
-    background-color: #fff;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 80%;
-    max-width: 400px;
+    border: 2px solid #00ffcc;
+    box-shadow: 0 0 20px rgba(0, 255, 204, 0.3);
+    text-align: center;
+    max-width: 500px;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.jogo p {
+    font-size: 1.1rem;
+    margin: 10px 0;
 }
 
 .palavra-visivel {
-    font-size: 24px;
+    font-size: 1.5rem;
     letter-spacing: 5px;
+    color: #00ffcc;
     font-weight: bold;
 }
 
 .dica {
+    color: #2cbcff;
     font-style: italic;
-    color: #666;
 }
 
 .tentativas, .letras {
+    color: #ff6666;
     font-weight: bold;
 }
 
-.adivinhar-form, .reiniciar-form, .voltar-menu {
+.adivinhar-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
     margin-top: 20px;
 }
 
-input[type="text"] {
+.adivinhar-form label {
+    font-size: 1.1rem;
+    color: #00ffcc;
+}
+
+.adivinhar-form input {
     padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
+    font-size: 1rem;
+    border: 2px solid #00ffcc;
     border-radius: 5px;
-    width: 50px;
+    background-color: #0a0a0a;
+    color: #ffffff;
     text-align: center;
+    width: 50px;
+}
+
+.adivinhar-form input:focus {
+    outline: none;
+    border-color: #2cbcff;
+    box-shadow: 0 0 10px #2cbcff;
+}
+
+.adivinhar-form button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #00ffcc;
+    color: #0a0a0a;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.adivinhar-form button:hover {
+    background-color: #00cc99;
+    transform: scale(1.05);
+}
+
+.adivinhar-form button:active {
+    transform: scale(0.95);
+}
+
+.reiniciar-form {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.reiniciar-form button, a button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #00ffcc;
+    color: #0a0a0a;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin: 5px;
+}
+
+.reiniciar-form button:hover, a button:hover {
+    background-color: #00cc99;
+    transform: scale(1.05);
+}
+
+.reiniciar-form button:active, a button:active {
+    transform: scale(0.95);
+}
+
+@keyframes aparecer {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

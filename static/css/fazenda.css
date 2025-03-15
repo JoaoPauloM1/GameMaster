@@ -1,123 +1,176 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    color: #333;
+* {
     margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #1a1a1a;
+    color: #ffffff;
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
     padding: 20px;
+    text-align: center;
 }
 
 h1 {
-    text-align: center;
-    color: #4CAF50;
-}
-
-.status {
-    background-color: #fff;
-    padding: 15px;
-    border-radius: 5px;
+    font-size: 2.5rem;
+    color: #8bc34a;
+    text-shadow: 0 0 10px #8bc34a, 0 0 20px #8bc34a;
     margin-bottom: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.plantacoes ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-.plantacoes li {
-    background-color: #fff;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.barra-progresso {
-    background-color: #e0e0e0;
-    border-radius: 5px;
-    height: 10px;
-    margin: 5px 0;
-    width: 100%; 
-    overflow: hidden; 
-}
-
-.progresso {
-    background-color: #4CAF50;
-    height: 100%;
-    border-radius: 5px;
-    max-width: 100%;
-}
-
-.pronto {
-    color: #4CAF50;
-    font-weight: bold;
-}
-
-.acoes {
-    text-align: center;
-    margin-top: 20px;
-}
-
-button {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    margin: 5px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #45a049;
 }
 
 .mensagem {
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 20px;
+    padding: 15px;
+    border-radius: 10px;
     text-align: center;
-}
-
-.mensagem.nivel-up {
-    background-color: #d4edda;
-    color: #155724;
-}
-
-.mensagem.dificuldade {
-    background-color: #fff3cd;
-    color: #856404;
+    margin-bottom: 20px;
+    background-color: rgba(0, 0, 0, 0.7);
+    border: 2px solid #8bc34a;
+    box-shadow: 0 0 15px rgba(139, 195, 74, 0.5);
+    animation: aparecer 0.5s ease-in-out;
 }
 
 .mensagem.evento {
-    background-color: #f8d7da;
-    color: #721c24;
+    border-color: #00bcd4;
+    box-shadow: 0 0 15px rgba(0, 188, 212, 0.5);
 }
 
-.mensagem span {
-    color: red;
+.mensagem.animal {
+    border-color: #ff9800;
+    box-shadow: 0 0 15px rgba(255, 152, 0, 0.5);
+}
+
+.status {
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    border: 2px solid #8bc34a;
+    box-shadow: 0 0 15px rgba(139, 195, 74, 0.5);
+}
+
+.status p {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.status strong {
+    color: #8bc34a;
 }
 
 .evento {
-    display: inline-block;
-    margin-right: 10px;
+    color: #00bcd4;
     font-weight: bold;
 }
 
-.reiniciar {
-    text-align: center;
-    margin-top: 20px;
+.plantacoes, .animais {
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    border: 2px solid #8bc34a;
+    box-shadow: 0 0 15px rgba(139, 195, 74, 0.5);
+    width: 100%;
+    max-width: 600px;
 }
 
-.reiniciar button {
-    background-color: #dc3545;
-    color: white;
-    border: none;
+.plantacoes h2, .animais h2 {
+    font-size: 1.8rem;
+    color: #8bc34a;
+    margin-bottom: 15px;
+}
+
+.plantacoes ul, .animais ul {
+    list-style: none;
+    padding: 0;
+}
+
+.plantacoes li, .animais li {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: rgba(139, 195, 74, 0.1);
+    border-radius: 5px;
+    border: 1px solid #8bc34a;
+}
+
+.barra-progresso {
+    width: 100%;
+    height: 10px;
+    background-color: #333;
+    border-radius: 5px;
+    margin: 5px 0;
+    overflow: hidden;
+}
+
+.progresso {
+    height: 100%;
+    background-color: #8bc34a;
+    border-radius: 5px;
+    transition: width 0.3s ease;
+}
+
+.pronto {
+    color: #8bc34a;
+    font-weight: bold;
+}
+
+.acoes, .comprar-animais, .reiniciar {
+    margin-bottom: 20px;
+}
+
+button {
     padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #8bc34a;
+    color: #1a1a1a;
+    border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin: 5px;
+    box-shadow: 0 0 10px rgba(139, 195, 74, 0.5);
 }
 
-.reiniciar button:hover {
-    background-color: #c82333;
+button:hover {
+    background-color: #7cb342;
+    transform: scale(1.05);
+}
+
+button:active {
+    transform: scale(0.95);
+}
+
+.comprar-animais button {
+    background-color: #00bcd4;
+    box-shadow: 0 0 10px rgba(0, 188, 212, 0.5);
+}
+
+.comprar-animais button:hover {
+    background-color: #0097a7;
+}
+
+.reiniciar button, a button {
+    background-color: #ff9800;
+    box-shadow: 0 0 10px rgba(255, 152, 0, 0.5);
+}
+
+.reiniciar button:hover, a button:hover {
+    background-color: #f57c00;
+}
+
+@keyframes aparecer {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

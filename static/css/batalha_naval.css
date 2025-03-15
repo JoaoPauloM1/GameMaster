@@ -1,62 +1,146 @@
-.mensagem {
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #001f3f;
+    color: #ffffff;
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
     padding: 20px;
-    margin: 20px auto;
+}
+
+h1 {
+    font-size: 2.5rem;
+    color: #ffd700;
+    text-shadow: 0 0 10px #ffd700, 0 0 20px #ffd700;
+    margin-bottom: 20px;
+}
+
+.mensagem {
+    padding: 15px;
     border-radius: 10px;
-    width: 80%;
-    max-width: 400px;
+    text-align: center;
+    margin-bottom: 20px;
+    background-color: rgba(0, 0, 0, 0.7);
+    border: 2px solid #ffd700;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+    animation: aparecer 0.5s ease-in-out;
 }
 
 .mensagem p {
-    font-size: 18px;
+    font-size: 1.2rem;
+    color: #ffd700;
+}
+
+p {
+    font-size: 1.1rem;
+    margin: 10px 0;
+    color: #ffffff;
+}
+
+.acertos {
+    color: #00ff00;
     font-weight: bold;
 }
 
-.acertos, .tentativas {
+.tentativas {
+    color: #ff6666;
     font-weight: bold;
-    color: #007bff;
-}
-
-.reiniciar-form {
-    margin-top: 20px;
 }
 
 .tabuleiro {
-    margin: 20px auto;
     border-collapse: collapse;
+    margin: 20px 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 3px solid #ffd700;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
 }
 
 .tabuleiro td {
-    width: 40px;
-    height: 40px;
-    border: 1px solid #ccc;
+    width: 60px;
+    height: 60px;
     text-align: center;
     vertical-align: middle;
+    border: 1px solid #ffd700;
+    background-color: rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s ease;
+}
+
+.tabuleiro td:hover {
+    background-color: rgba(255, 215, 0, 0.1);
+}
+
+.acerto {
+    color: #ff0000;
+    font-size: 2rem;
+}
+
+.erro {
+    color: #00bfff;
+    font-size: 2rem;
+}
+
+.agua {
+    color: #00bfff;
+    font-size: 2rem;
 }
 
 .celula-form {
-    margin: 0;
-    padding: 0;
+    display: inline;
 }
 
 .celula-button {
     background: none;
     border: none;
+    color: #ffd700;
+    font-size: 2rem;
     cursor: pointer;
-    font-size: 20px;
+    transition: transform 0.2s ease;
 }
 
 .celula-button:hover {
-    color: #007bff;
+    transform: scale(1.2);
 }
 
-.acerto {
-    color: #dc3545;
-}
-
-.erro, .agua {
-    color: #007bff;
-}
-
-.voltar-menu {
+.reiniciar-form, a {
     margin-top: 20px;
+}
+
+.reiniciar-form button, a button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #ffd700;
+    color: #001f3f;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin: 5px;
+}
+
+.reiniciar-form button:hover, a button:hover {
+    background-color: #ccac00;
+    transform: scale(1.05);
+}
+
+.reiniciar-form button:active, a button:active {
+    transform: scale(0.95);
+}
+
+@keyframes aparecer {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

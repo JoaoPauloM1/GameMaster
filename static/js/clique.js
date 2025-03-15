@@ -8,7 +8,7 @@ const container = document.querySelector('.container');
 let inicioTempo;
 let cliques = 0;
 let jogoAtivo = false;
-const tempoAparecer = 700;
+const tempoAparecer = 720;
 
 function iniciarJogo() {
     cliques = 0;
@@ -24,7 +24,7 @@ function moverAlvo() {
     if (!jogoAtivo) return;
 
     const containerRect = container.getBoundingClientRect();
-    const alvoSize = 50;
+    const alvoSize = 60;
 
     const x = Math.random() * (containerRect.width - alvoSize);
     const y = Math.random() * (containerRect.height - alvoSize);
