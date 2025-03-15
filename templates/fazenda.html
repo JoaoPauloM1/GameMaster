@@ -17,18 +17,6 @@
         </div>
     {% endif %}
 
-    {% if level_up_message %}
-        <div class="mensagem nivel-up">
-            <p>{{ level_up_message }}</p>
-        </div>
-    {% endif %}
-
-    {% if difficulty_message %}
-        <div class="mensagem dificuldade">
-            <p>{{ difficulty_message }}</p>
-        </div>
-    {% endif %}
-
     {% if event_message %}
         <div class="mensagem evento">
             <p>{{ event_message }}</p>
@@ -37,9 +25,8 @@
 
     <div class="status">
         <p>Moedas: <strong>{{ farm.coins }}</strong></p>
-        <p>Nível: <strong>{{ farm.level }}</strong> (Exp: {{ farm.experience }}/100)</p>
         <p>Dia: <strong>{{ farm.day }}</strong></p>
-        <p>Eventos ativos: 
+        <p>Eventos ativos:
             {% for event in farm.events %}
                 <span class="evento">
                     {% if event == 'rain' %}🌧️ Chuva
@@ -58,7 +45,7 @@
             <ul>
                 {% for plant in farm.plantations %}
                     <li>
-                        🌱 {{ plant.type }} - Crescimento: 
+                        🌱 {{ plant.type }} - Crescimento:
                         <div class="barra-progresso">
                             <div class="progresso" style="width: {{ plant.growth }}%;"></div>
                         </div>
@@ -73,12 +60,53 @@
         {% endif %}
     </div>
 
+    <div class="animais">
+        <h2>Animais:</h2>
+        {% if farm.animals %}
+            <ul>
+                {% for animal in farm.animals %}
+                    <li>
+                        {% if animal.type == 'cow' %}🐄
+                        {% elif animal.type == 'chicken' %}🐔
+                        {% elif animal.type == 'pig' %}🐖
+                        {% endif %}
+                        {% if animal.type == 'cow' %}Vaca
+                        {% elif animal.type == 'chicken' %}Galinha
+                        {% elif animal.type == 'pig' %}Porco
+                        {% endif %} - Produz em {{ animal.days_until_production }} dias
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Nenhum animal no momento.</p>
+        {% endif %}
+    </div>
+
+    {% if animal_messages %}
+        <div class="mensagem animal">
+            {% for msg in animal_messages %}
+                <p>{{ msg }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+
     <div class="acoes">
         <form method="post">
             {% csrf_token %}
             <button type="submit" name="plant">Plantar ({{ farm.plant_cost }} moedas)</button>
             <button type="submit" name="water">Regar (2 moedas)</button>
             <button type="submit" name="harvest">Colher</button>
+            <button type="submit" name="next_day">Passar o Dia</button>
+        </form>
+    </div>
+
+    <div class="comprar-animais">
+        <h2>Comprar Animais:</h2>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" name="buy_animal" value="cow">Comprar Vaca ({{ farm.animal_cost.cow }} moedas)</button>
+            <button type="submit" name="buy_animal" value="chicken">Comprar Galinha ({{ farm.animal_cost.chicken }} moedas)</button>
+            <button type="submit" name="buy_animal" value="pig">Comprar Porco ({{ farm.animal_cost.pig }} moedas)</button>
         </form>
     </div>
 

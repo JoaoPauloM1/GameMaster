@@ -8,7 +8,7 @@ const container = document.querySelector('.container');
 let inicioTempo;
 let cliques = 0;
 let jogoAtivo = false;
-const tempoAparecer = 800;
+const tempoAparecer = 700;
 
 function iniciarJogo() {
     cliques = 0;
