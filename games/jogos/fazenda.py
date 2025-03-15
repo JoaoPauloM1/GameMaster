@@ -81,7 +81,7 @@ def update_animals(farm):
                 animal_messages.append(f"🐖 Seu porco produziu carne e rendeu 7 moedas!")
             animal['days_until_production'] = random.randint(3, 7)
 
-        if random.randint(1, 100) <= 15:
+        if random.randint(1, 100) <= 10:
             farm['animals'].remove(animal)
             animal_messages.append(f"💀 Seu(a) {animal_names[animal['type']]} morreu!")
 
